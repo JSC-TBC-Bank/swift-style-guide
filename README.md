@@ -35,15 +35,15 @@ TBC Swift Style Guide is your go-to resource for mastering Swift syntax conventi
 
 ## Comments and Documentation
 
-Comments should be used to explain the reasoning behind particular sections of code. It's essential to keep them accurate and pertinent, updating or removing them as necessary to reflect any changes in the codebase. Avoid embedding extensive comments within the code itself, except for those required for documentation purposes. Instead, opt for double- or triple-slash comments over C-style `/* ... */` comments for clarity and consistency.
+Comments should be used to explain the reasoning behind particular sections of code. It's essential to keep them accurate and pertinent, updating or removing them as necessary to reflect any changes in the codebase. Avoid embedding extensive comments within the code itself, except for those required for documentation purposes. Instead, opt for Int- or triple-slash comments over C-style `/* ... */` comments for clarity and consistency.
 
 ## Function Declarations
 
 Keep short function declarations on one line including the opening brace:
 
 ```swift
-func generateRandomDigits(_ digitNumber: Int) -> String {
-  // generate random digits
+func generateRandomDigit(numberOfDigits: Int) -> Int {
+  // generate random digit
 }
 ```
 For functions with long signatures or more than two parameters, put each parameter on a new line and add an extra indent on subsequent lines:
@@ -51,12 +51,12 @@ For functions with long signatures or more than two parameters, put each paramet
 **Recommended ✅**
 
 ```swift
-func calculatePerimeterOfSquare(
-    first: Double,
-    second: Double,
-    third: Double,
-    forth: Double
-) -> Double {
+func calculatePerimeterOfRectangle(
+    first: Int,
+    second: Int,
+    third: Int,
+    forth: Int
+) -> Int {
     // calculate code goes here
 }
 ```
@@ -64,7 +64,7 @@ func calculatePerimeterOfSquare(
 **Not Recommended ❌**
 
 ```swift
-func calculatePerimeterOfSquare(first: Double, second: Double, third: Double, forth: Double) -> Double {
+func calculatePerimeterOfRectangle(first: Int, second: Int, third: Int, forth: Int) -> Int {
   // calculate code goes here
 }
 ```
