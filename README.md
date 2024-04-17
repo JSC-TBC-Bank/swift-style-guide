@@ -68,3 +68,84 @@ func calculatePerimeterOfRectangle(first: Int, second: Int, third: Int, forth: I
   // calculate code goes here
 }
 ```
+# Control Flow
+
+# If Statements
+
+When using control flow statement `if`, the first continuation line should be after the control flow keyword. If have more than one continuation line, write them on a new line. The open brace `{` should be next to the last  continuation line.
+
+**Recommended ✅**
+
+```swift
+if firstBooleanValue,
+   secondBooleanValue,
+   thirdBooleanValue {
+    // do something
+}
+```
+**Not Recommended ❌**
+
+```swift
+if firstBooleanValue,
+   secondBooleanValue,
+   thirdBooleanValue 
+{
+    // do something
+}
+```
+
+```swift
+if
+    firstBooleanValue,
+    secondBooleanValue,
+    thirdBooleanValue
+{
+    // do something
+}
+```
+
+If have `else if` block write first continuation line after it.
+
+**Recommended ✅**
+
+```swift
+if firstBooleanValue {
+    // do something
+} else if secondBooleanValue {
+    // do something
+}
+```
+**Not Recommended ❌**
+
+```swift
+if firstBooleanValue {
+    // do something
+} else if
+    secondBooleanValue {
+    // do something
+}
+```
+
+Minimize `if` statement nesting by using the compound version when possible.
+
+**Recommended ✅**
+
+```swift
+if firstBooleanValue,
+   secondBooleanValue,
+   thirdBooleanValue {
+    // do something
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+if firstBooleanValue {
+    if secondBooleanValue {
+        if thirdBooleanValue {
+            // do something
+        }
+    }
+}
+```
