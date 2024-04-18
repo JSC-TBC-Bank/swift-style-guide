@@ -65,9 +65,9 @@ class URLFinder {
 ```swift
 var defaultBackgroundColor = UIColor()
 
-func selectionDestination() {}
+func selectionDestination() { *** }
 
-func insertObject(at) {}
+func insertObject(at) { *** }
 ```
 
 **Not Recommended ❌**
@@ -75,16 +75,16 @@ func insertObject(at) {}
 ```swift
 var defaultBkgdColor = UIColor()
 
-func selDest() {}
+func selDest() { *** }
 
-func insert(at) {}
+func insert(at) { *** }
 ```
 
 **File**
 
 The name of a file should make it clear what the contents are. For example, if there is a single class named ImageParser then the file should be called ImageParser.swift. If you have a view controller, along with some helper types, then using the name of the view controller will likely be the best choice. A good heuristic to use is that if it’s ever unclear what to name a file, it may be worth splitting that file up.
 
-<img width="466" alt="Screenshot 2024-04-16 at 15 16 45" src="https://github.com/JSC-TBC-Bank/swift-style-guide/assets/72808071/3da1595a-9dad-4c2b-a309-48e5b35683ee"> <br />
+<img width="441" alt="Screenshot 2024-04-17 at 18 34 30" src="https://github.com/JSC-TBC-Bank/swift-style-guide/assets/72808071/c6e7581b-2e33-4746-8c4b-4d4dd9f5ec24"> <br />
 
 **Object Types**
 
@@ -98,7 +98,7 @@ The name of a file should make it clear what the contents are. For example, if t
 class RoundAnimatingButton: UIButton {
   static let buttonPadding: CGFloat = 20.0
 
-  func startAnimating(duration: NSTimeInterval) { }
+  func startAnimating(duration: NSTimeInterval) { *** }
 }
 ```
 
@@ -107,7 +107,8 @@ class RoundAnimatingButton: UIButton {
 ```swift
 class CustomButton: UIButton {
   static let btnPadding: CGFloat = 20.0
-  func startAnimate(for: NSTimeInterval) { }
+
+  func startAnimate(for: NSTimeInterval) { *** }
  }
 ```
 
@@ -144,9 +145,8 @@ public struct Person {
 **Protocol**
 
 * A protocol should be named as nouns if they describe what something is doing (e.g. `Collection`)
-* A protocol that describes a capability should be named using the suffixes `able`, `ible`, or `ing` (e.g. `Equatable`, `ProgressReporting`).”
-* You can also add a `Protocol` suffix to the protocol's name if you want to distinguish it from a Swift class or struct.
-* Delegate method naming should express exact data handling that will be processed under the private implementation.
+* A protocol that describes a capability can be named using the suffixes `able`, `ible`, or `ing` (e.g. `Equatable`, `ProgressReporting`).”
+* Delegate method naming should express exact data handling functionality that will be processed under the private implementation.
 
 **Recommended ✅**
 
@@ -168,18 +168,21 @@ protocol Load {
 }
 ```
 
-* Protocol Implementation can be named with suffix `Source`, this kind of naming will distinguish types between protocol and class/structure.
+* A protocol Implementation can be named with prefix `Default`, this kind of naming will distinguish types between protocol and class/structure.
+* Avoid using `get`, `fetch` or `parse` prefixes when declaring delegate methods.
 
 **Recommended ✅**
 
 ```swift
 protocol RateWorker {
-    func rateInfoFetched()  -> [String: Int]
+    func rateInfo()  -> [String: Int]
+    func conversionDetails(model: RequestModel)
 }
 
-Class RateWorkerSource: RateWorker {
-    func rateInfoFetched()  -> [String: Int] {
-    }
+Class DefaultRateWorker: RateWorker {
+    func rateInfo()  -> [String: Int] { *** }
+
+    func conversionDetails(model: RequestModel) { *** }
 }
 ```
 
@@ -187,12 +190,14 @@ Class RateWorkerSource: RateWorker {
 
 ```swift
 protocol RateWorkerProtocol {
-    func rateInfoFetched() -> [String: Int]
+    func fetchRateInfo() -> [String: Int]
+    func getConversionDetails(model: RequestModel)
 }
 
 Class RateWorker: RateWorkerProtocol {
-    func rateInfoFetched()  -> [String: Int] {
-    }
+    func fetchRateInfo()  -> [String: Int] { *** }
+
+    func getConversionDetails(model: RequestModel) { *** }
 }
 ```
 
