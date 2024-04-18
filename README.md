@@ -191,7 +191,7 @@ Encapsulation improves readability and maintainability of your code.
 **Recommended ✅**
 
 ```swift
-final class UserProfile {
+public final class UserProfile {
   @IBOutlet private weak var profileImageView: UIImageView!
 
   public var username: String?
@@ -213,8 +213,8 @@ class UserProfile {
 
   var username: String?
   private (set) var email: String?
-  public let internalUserID: Int
-  internal let settings: [String: Any]
+  public var internalUserID: Int
+  internal var settings: [String: Any]
 
   func updateEmail(newEmail: String)() {
     email = newEmail
