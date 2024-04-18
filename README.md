@@ -176,6 +176,52 @@ class AlbumViewModel {
 @objc func didTapContinueButton() { *** }
 ```
 
+**Access Modifiers**
+
+Encapsulation improves readability and maintainability of your code.
+
+* Specify access modifiers only when they are needed and required by the compiler.
+* You can declare property names considering their accessing scope.
+* the access modifier should always be presented first in the list before any other modifiers.
+* For `internal` types and functions, do not explicitly specify the access modifier since all entities in Swift are `internal` by default.
+* Declare classes with `final` keyword to prevent them from being subclassed.
+* Classes and methods marked as `open` or `public` can be subclassed and overridden respectively out of their defining module.
+* Encapsulate outlets and actions as `private` to limit their accessibility.
+
+**Recommended ✅**
+
+```swift
+final class UserProfile {
+  @IBOutlet private weak var profileImageView: UIImageView!
+
+  public var username: String?
+  private(set) var email: String?
+  private let internalUserID: Int
+  fileprivate let settings: [String: Any]
+
+  public func updateEmail(newEmail: String) {
+    email = newEmail
+  }
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+class UserProfile {
+  @IBOutlet weak private var ProfileImageView: UIImageView!
+
+  var username: String?
+  private (set) var email: String?
+  public let internalUserID: Int
+  internal let settings: [String: Any]
+
+  func updateEmail(newEmail: String)() {
+    email = newEmail
+  }
+}
+```
+
 **Protocol**
 
 * A protocol should be named as nouns if they describe what something is doing (e.g. `Collection`) [Apple's API Design Guidelines](https://swift.org/documentation/api-design-guidelines/).
