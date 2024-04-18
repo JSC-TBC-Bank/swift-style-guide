@@ -50,8 +50,7 @@ let htmlBodyContent: String = "<p>Hello, World!</p>"
 // Prefer using ID to Id
 let profileID: Int = 1
 // Prefer URLFinder to UrlFinder
-class URLFinder {
-}
+class URLFinder { *** }
 ```
 
 **Clarity**
@@ -142,10 +141,45 @@ public struct Person {
 }
 ```
 
+Property wrappers should be written as attributes on top of the classes.
+
+**Recommended ✅**
+
+```swift
+@MainActor
+class UpdateViewModel {
+    func updateData() { *** }
+}
+
+class AlbumViewModel {
+  @MainActor
+    var images: [UIImage]?
+    var pages: [Int]?
+}
+
+@objc
+func didTapContinueButton() { *** }
+```
+
+**Not Recommended ❌**
+
+```swift
+@MainActor class UpdateViewModel {
+    func updateData() { *** }
+}
+
+class AlbumViewModel {
+    @MainActor var images: [UIImage]?
+    var pages: [Int]?
+}
+
+@objc func didTapContinueButton() { *** }
+```
+
 **Protocol**
 
-* A protocol should be named as nouns if they describe what something is doing (e.g. `Collection`)
-* A protocol that describes a capability can be named using the suffixes `able`, `ible`, or `ing` (e.g. `Equatable`, `ProgressReporting`).”
+* A protocol should be named as nouns if they describe what something is doing (e.g. `Collection`) [Apple's API Design Guidelines](https://swift.org/documentation/api-design-guidelines/).
+* A protocol that describes a capability can be named using the suffixes `able`, `ible`, or `ing` (e.g. `Equatable`, `ProgressReporting`).
 * Delegate method naming should express exact data handling functionality that will be processed under the private implementation.
 
 **Recommended ✅**
