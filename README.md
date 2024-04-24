@@ -22,6 +22,7 @@ TBC Swift Style Guide is your go-to resource for mastering Swift syntax conventi
   - [If Statements](#if-statements)
   - [Switch Statements](#switch-statements)
   - [Loops](#loops)
+  - [Ternary Operator](#ternary-operator)
 - [Function Declarations](#function-declarations)
 - [Function Calls](#function-calls)
 - [Closures](#closures)
@@ -148,4 +149,126 @@ if firstBooleanValue {
         }
     }
 }
+```
+
+# Switch Statements
+
+When use switch with `enums ` with associated values, write let before case.
+
+```swift
+enum PaymentMethod {
+    case creditCard(number: String, expirationDate: String, cvv: String)
+    case paypal(email: String)
+    case applePay
+}
+
+let paymentMethod = PaymentMethod.applePay
+```
+
+**Recommended ✅**
+
+```swift
+switch paymentMethod {
+case let .creditCard(number, expirationDate, cvv):
+    () // Do something...
+case let .paypal(email):
+    () // Do something...
+case .applePay:
+    () // Do something...
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+switch paymentMethod {
+case .creditCard(number: let number, expirationDate: let expirationDate, cvv: let cvv):
+    () // Do something...
+case .paypal(email: let email):
+    () // Do something...
+case .applePay:
+    () // Do something...
+}
+```
+
+```swift
+switch paymentMethod {
+case .creditCard(let number, let expirationDate, let cvv):
+    () // Do something...
+case .paypal(let email):
+    () // Do something...
+case .applePay:
+    () // Do something...
+}
+```
+
+When using switch to set the value of a variable. 
+
+**Recommended ✅**
+
+```swift
+let spelledOut = switch Int.random(in: 0...3) {
+case 0:
+    "Zero"
+case 1:
+    "One"
+case 2:
+    "Two"
+case 3:
+    "Three"
+default:
+    "Out of range"
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+let spelledOut: String
+
+switch Int.random(in: 0...3) {
+case 0:
+    spelledOut = "Zero"
+case 1:
+    spelledOut = "One"
+case 2:
+    spelledOut = "Two"
+case 3:
+    spelledOut = "Three"
+default:
+    spelledOut = "Out of range"
+}
+```
+
+# Ternary Operator
+
+Use Ternary Operator to increase code clarity. Write it in one line. If conditions are too long and complex, put them into separate variables.
+
+**Recommended ✅**
+
+```swift
+let operation = "add"
+let fifty = 50
+let twenty = 20
+let sum = "The sum of \(fifty) and \(twenty) is \(fifty + twenty)."
+let difference = "The difference between \(fifty) and \(twenty) is \(fifty - twenty)."
+let text = operation == "add" ? sum : difference
+```
+
+**Not Recommended ❌**
+
+```swift
+let operation = "add"
+let fifty = 50
+let twenty = 20
+let text = operation == "add" ? "The sum of \(fifty) and \(twenty) is \(fifty + twenty)." : "The difference between \(fifty) and \(twenty) is \(fifty - twenty)."
+```
+
+```swift
+let operation = "add"
+let fifty = 50
+let twenty = 20
+let text = operation == "add" ?
+"The sum of \(fifty) and \(twenty) is \(fifty + twenty)." :
+"The difference between \(fifty) and \(twenty) is \(fifty - twenty)."
 ```
