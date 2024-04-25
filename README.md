@@ -141,7 +141,11 @@ public struct Person {
 }
 ```
 
-Property wrappers should be written as attributes on top of the classes.
+Property wrappers should be written as attributes on top of the objects or methods.
+
+* naming methods using Target-Action version of the Command pattern, ([Target-Action](https://swift.org/documentation/api-design-guidelines/(https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/Target-Action/Target-Action.html)) is the Command Pattern part of Apple’s MVC). the UI element (e.g. a button) is the invoker, the action/message passed to/method called on the object is the command and the target is the receiver. In this case, a command should be something like `undo`, `popBackward`, or `scrollToEndOfDocument`.
+  
+(calling your action didTapContinueButton() sounds like a delegate method. We don’t expect a call from some very specific source like in a delegate pattern. Instead we get a command to interpret and execute. And this command may not be invoked. Or may be invoked multiple times. By different senders, we don’t even know who will be triggering the action.)
 
 **Recommended ✅**
 
@@ -158,7 +162,7 @@ class AlbumViewModel {
 }
 
 @objc
-func didTapContinueButton() { *** }
+func continue() { *** }
 ```
 
 **Not Recommended ❌**
