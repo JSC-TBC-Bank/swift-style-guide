@@ -240,6 +240,52 @@ default:
 }
 ```
 
+# Loops
+
+Prefer using `for-in` loops instead of `while` loops with condition checking and incrementation.
+
+**Recommended ✅**
+
+```swift
+for number in 0..<5 {
+    print(number)
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+var number = 0
+while number < 5 {
+    print(number)
+    number += 1
+}
+```
+
+When the entire body of a for loop consists solely of an if block testing a condition of the element, place the testing condition within the where clause of the for statement instead.
+
+**Recommended ✅**
+
+```swift
+let numbers = [1, 2, 3, 4, 5]
+
+for number in numbers where number == 5 {
+    // Do something...
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+let numbers = [1, 2, 3, 4, 5]
+
+for number in numbers {
+    if number == 5 {
+        // Do something...
+    }
+}
+```
+
 # Ternary Operator
 
 Use Ternary Operator to increase code clarity. Write it in one line. If conditions are too long and complex, put them into separate variables.
