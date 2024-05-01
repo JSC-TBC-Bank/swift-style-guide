@@ -83,7 +83,8 @@ func insert(at) { *** }
 
 The name of a file should make it clear what the contents are. For example, if there is a single class named ImageParser then the file should be called ImageParser.swift. If you have a view controller, along with some helper types, then using the name of the view controller will likely be the best choice. A good heuristic to use is that if it’s ever unclear what to name a file, it may be worth splitting that file up.
 
-<img width="441" alt="Screenshot 2024-04-17 at 18 34 30" src="https://github.com/JSC-TBC-Bank/swift-style-guide/assets/72808071/c6e7581b-2e33-4746-8c4b-4d4dd9f5ec24"> <br />
+<img width="417" alt="Screenshot 2024-05-01 at 16 56 45" src="https://github.com/JSC-TBC-Bank/swift-style-guide/assets/72808071/75612c72-96ae-43c3-88d9-19abf084aa7e"> <br />
+
 
 **Object Types**
 
