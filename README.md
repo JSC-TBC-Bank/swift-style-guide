@@ -24,14 +24,14 @@ TBC Swift Style Guide is your go-to resource for mastering Swift syntax conventi
   - [Loops](#loops)
 - [Function Declarations](#function-declarations)
 - [Function Calls](#function-calls)
-- [Closures](#closures)
+- [Trailing Closures](#trailing-closures)
 - [Memory Management](#memory-managment)
 - [Classes, Structures, and Enums](#classes-structures-and-enums)
   - [Declaration and Naming](#declaration-and-naming)
   - [Properties](#properties)
   - [Methods](#methods)
 - [Error Handling](#error-handling)
-- [Imports and Module Organization](#imports-and-module-organization)
+- [Import Statements](#import-statements)
 
 ## Comments and Documentation
 
@@ -67,4 +67,97 @@ func calculatePerimeterOfRectangle(
 func calculatePerimeterOfRectangle(first: Int, second: Int, third: Int, forth: Int) -> Int {
   // calculate code goes here
 }
+```
+
+## Function Calls
+
+Match the format of function declarations when calling them. If a call fits on one line, keep it that way and if the call site needs to be wrapped, each parameter should be placed on a new line.
+
+**Recommended ✅**
+
+```swift
+let perimeter = calculatePerimeterOfRectangle(
+    first: 3,
+    second: 6,
+    third: 3,
+    forth: 6
+)
+```
+
+**Not Recommended ❌**
+
+```swift
+let perimeter = calculatePerimeterOfRectangle(first: 3, second: 6, third: 3, forth: 6)
+```
+
+## Trailing Closures
+
+If a function call has multiple closure arguments, then none are called using trailing closure syntax; all are labeled and nested inside the argument list’s parentheses.
+
+**Recommended ✅**
+```swift
+UIView.animate(
+  withDuration: 0.5,
+  animations: {
+    // ...
+  },
+  completion: { finished in
+    // ...
+  })
+```
+
+**Not Recommended ❌**
+
+```swift
+UIView.animate(
+  withDuration: 0.5,
+  animations: {
+    // ...
+  }) { finished in
+    // ...
+  }
+```
+
+If a function has a single closure argument and it is the final argument, then it is always called using trailing closure syntax and when a function called with trailing closure syntax takes no other arguments, empty parentheses `()` after the function name are never present.
+
+**Recommended ✅**
+
+```swift
+Timer.scheduledTimer(timeInterval: 30, repeats: false) { timer in
+  print("Timer done!")
+}
+
+let squares = [1, 2, 3].map { $0 * $0 }
+```
+
+**Not Recommended ❌**
+
+```swift
+Timer.scheduledTimer(timeInterval: 30, repeats: false, block: { timer in
+  print("Timer done!")
+})
+
+let squares = [1, 2, 3].map({ $0 * $0 })
+```
+## Import Statements
+
+Import only the modules a source file requires. For example, don't import UIKit when importing Foundation will suffice. Likewise, don't import Foundation if you must import UIKit.
+
+**Recommended ✅**
+
+```swift
+import UIKit
+
+var view: UIView
+var baseURLs: [URL]
+```
+
+**Not Recommended ❌**
+
+```swift
+import UIKit
+import Foundation
+
+var view: UIView
+var baseURLs: [URL]
 ```
