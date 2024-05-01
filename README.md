@@ -163,6 +163,8 @@ class AlbumViewModel {
 
 @objc
 func continue() { *** }
+func onContinue() { *** }
+func continueTap() { *** }
 ```
 
 **Not Recommended ❌**
@@ -253,35 +255,41 @@ protocol Load {
 ```
 
 * A protocol Implementation can be named with prefix `Default`, this kind of naming will distinguish types between protocol and class/structure.
-* Avoid using `get`, `fetch` or `parse` prefixes when declaring delegate methods.
+* Using `get`, `fetch`, `remove`, `update` prefixes are preferable and sometimes unavoidable when declaring delegate methods for service calls.
 
 **Recommended ✅**
 
 ```swift
-protocol RateWorker {
-    func rateInfo()  -> [String: Int]
-    func conversionDetails(model: RequestModel)
+protocol RateWorkerProtocol {
+    func fetchRateInfo() -> [String: Int]
+    func getConversionDetails(for: RequestModel) -> [DetailsModel]
+    func removeFavoriteRate(model: RateModel)
 }
 
-Class DefaultRateWorker: RateWorker {
-    func rateInfo()  -> [String: Int] { *** }
+Class RateWorker: RateWorkerProtocol {
+    func fetchRateInfo() -> [String: Int] { *** }
 
-    func conversionDetails(model: RequestModel) { *** }
+    func getConversionDetails(for model: RequestModel) -> [DetailsModel] { *** }
+
+    func removeFavoriteRate(model: RateModel) { *** }
 }
 ```
 
 **Not Recommended ❌**
 
 ```swift
-protocol RateWorkerProtocol {
-    func fetchRateInfo() -> [String: Int]
-    func getConversionDetails(model: RequestModel)
+protocol RateWorker {
+    func rateInfo() -> [String: Int]
+    func conversionDetails(for: RequestModel) -> [DetailsModel]
+    func favoriteRate(model: RateModel)
 }
 
-Class RateWorker: RateWorkerProtocol {
-    func fetchRateInfo()  -> [String: Int] { *** }
+Class DefaultRateWorker: RateWorker {
+    func rateInfo()  -> [String: Int] { *** }
 
-    func getConversionDetails(model: RequestModel) { *** }
+    func conversionDetails(for model: RequestModel) -> [DetailsModel] { *** }
+
+    func favoriteRate(model: RateModel) { *** }
 }
 ```
 
