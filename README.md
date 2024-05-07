@@ -139,6 +139,21 @@ Timer.scheduledTimer(timeInterval: 30, repeats: false, block: { timer in
 
 let squares = [1, 2, 3].map({ $0 * $0 })
 ```
+## Error Handling
+
+
+
+**Recommended ✅**
+
+```swift
+
+```
+
+**Not Recommended ❌**
+
+```swift
+
+```
 ## Import Statements
 
 Import only the modules a source file requires. For example, don't import UIKit when importing Foundation will suffice. Likewise, don't import Foundation if you must import UIKit.
