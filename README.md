@@ -192,6 +192,36 @@ do {
 }
 ```
 
+**Pattern matching**
+
+When catching an error with a parameter, you should use "let" after the "catch" keyword
+
+**Recommended ✅**
+
+```swift
+do {
+    let result = try processData()
+
+    print(result)
+} catch let DataError.invalidData(message) {
+    // Handling the error
+    print("Data error occurred with message: \(message)")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+do {
+    let result = try processData()
+
+    print(result)
+} catch DataError.invalidData(let message) {
+    // Handling the error
+    print("Data error occurred with message: \(message)")
+}
+```
+
 Start throw/try from new line for clarity, consistency, and better error isolation.
 
 **Recommended ✅**
@@ -381,6 +411,68 @@ do {
 } catch {
     print("An unexpected error occurred: \(error)")
 }
+```
+
+**Defer**
+
+In some cases, using defer is better because it ensures consistent execution, regardless of the error handling path.
+
+**Recommended ✅**
+```swift
+func processFile() throws {
+    let file = openFile()
+
+    defer {
+        closeFile(file)
+    }
+
+    guard file.mimeType == "image/jpeg" else {
+        throw FileError.unexpectedFileMIMEType
+    }
+
+    guard file.size > 0 else {
+        throw FileError.invalidFileData
+    }
+
+    // File process
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+func processFile() throws {
+    let file = openFile()
+
+    guard file.mimeType == "image/jpeg" else {
+        closeFile(file)
+
+        throw FileError.unexpectedFileMIMEType
+    }
+
+    guard file.size > 0 else {
+        closeFile(file)
+
+        throw FileError.invalidFileData
+    }
+
+    // File process
+}
+```
+
+**Error handling with async/await**
+
+Keyword 'try' must precede 'await' keyword.
+
+**Recommended ✅**
+```swift
+try await Task.sleep(for: .seconds(5))
+```
+
+**Not Recommended ❌**
+
+```swift
+await try Task.sleep(for: .seconds(5))
 ```
 
 ## Import Statements
