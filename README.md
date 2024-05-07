@@ -141,8 +141,6 @@ let squares = [1, 2, 3].map({ $0 * $0 })
 ```
 ## Error Handling
 
-
-
 **Recommended ✅**
 
 ```swift
