@@ -273,6 +273,116 @@ do {
 }
 ```
 
+**Optionals**
+
+When expecting a value from a throwable function, sometimes using try? instead of a do-catch block is better.
+
+**Recommended ✅**
+```swift
+func divide(_ dividend: Int, by divisor: Int) throws -> Int {
+    guard divisor != 0 else {
+        throw MathError.divisionByZero
+    }
+
+    return dividend / divisor
+}
+
+// Using try? for optional value
+let result = try? divide(10, by: 2)
+
+if let value = result {
+    print("Result of division: \(value)")
+} else {
+    print("Division by zero or invalid input occurred")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+func divide(_ dividend: Int, by divisor: Int) throws -> Int {
+    guard divisor != 0 else {
+        throw MathError.divisionByZero
+    }
+
+    return dividend / divisor
+}
+
+// Using do-catch block for error handling
+do {
+    let result = try divide(10, by: 2)
+    print("Result of division: \(result)")
+} catch MathError.divisionByZero {
+    print("Division by zero occurred")
+} catch {
+    print("An unexpected error occurred: \(error)")
+}
+```
+
+**Propagating errors**
+
+When expecting a value from a throwable function, sometimes using try? instead of a do-catch block is better.
+
+**Recommended ✅**
+```swift
+func fetchDataFromDatabase() throws -> [String] {
+    // Simulating a function that fetches data from a database
+    let success = Bool.random()
+    if success {
+        return ["Data 1", "Data 2", "Data 3"]
+    } else {
+        // Throw queryError if data retrieval fails
+        throw DatabaseError.queryError
+    }
+}
+
+// Function propagating the error to the caller
+func processData() throws {
+    let data = try fetchDataFromDatabase()
+    print("Data retrieved from database: \(data)")
+}
+
+// Example usage
+do {
+    try processData()
+} catch DatabaseError.queryError {
+    print("Database query error occurred.")
+} catch {
+    print("An unexpected error occurred: \(error)")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+// Function propagating the error to the caller
+func processData() throws -> [String] {
+    let data: [String]
+
+    // Simulating a function that fetches data from a database
+    let success = Bool.random()
+    if success {
+        data = ["Data 1", "Data 2", "Data 3"]
+    } else {
+        // Throw queryError if data retrieval fails
+        throw DatabaseError.queryError
+    }
+
+    print("Data retrieved from database: \(data)")
+
+    return data
+}
+
+// Example usage
+do {
+    try processData()
+} catch DatabaseError.queryError {
+    print("Database query error occurred.")
+} catch {
+    print("An unexpected error occurred: \(error)")
+}
+```
+
 ## Import Statements
 
 Import only the modules a source file requires. For example, don't import UIKit when importing Foundation will suffice. Likewise, don't import Foundation if you must import UIKit.
