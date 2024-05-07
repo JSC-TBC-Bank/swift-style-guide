@@ -222,7 +222,7 @@ do {
 }
 ```
 
-**Variable**
+**Catch any errors**
 
 When catching a general error with a parameter and you don't want to declare a different name for the error variable, you omit the variable name after the "catch" keyword
 
@@ -490,7 +490,7 @@ func processFile() throws {
 }
 ```
 
-**Error handling with async/await**
+**Async code**
 
 Keyword 'try' must precede 'await' keyword.
 
