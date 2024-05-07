@@ -381,7 +381,7 @@ do {
 
 **Propagating errors**
 
-When expecting a value from a throwable function, sometimes using try? instead of a do-catch block is better.
+Propagating errors improves flexibility, separation of concerns, readability, consistency, and testing capabilities.
 
 **Recommended ✅**
 ```swift
