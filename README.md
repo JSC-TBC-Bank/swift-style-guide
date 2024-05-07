@@ -222,6 +222,36 @@ do {
 }
 ```
 
+**Variable**
+
+When catching a general error with a parameter and you don't want to declare a different name for the error variable, you omit the variable name after the "catch" keyword
+
+**Recommended ✅**
+
+```swift
+do {
+    let result = try processData()
+
+    print(result)
+} catch {
+    // Handling the error
+    print("Error \(error)")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+do {
+    let result = try processData()
+
+    print(result)
+} catch let error {
+    // Handling the error
+    print("Error \(error)")
+}
+```
+
 Start throw/try from new line for clarity, consistency, and better error isolation.
 
 **Recommended ✅**
