@@ -141,17 +141,105 @@ let squares = [1, 2, 3].map({ $0 * $0 })
 ```
 ## Error Handling
 
+**Basic do-catch block**
+
+Prioritize using custom error types over NSError unless you specifically require interoperability with Objective-C frameworks. 
+
 **Recommended ✅**
 
 ```swift
+enum NetworkError: Error {
+    case noInternet
+    case serverError
+}
 
+func fetchData() throws {
+    if !isConnectedToInternet {
+        throw NetworkError.noInternet
+    }
+
+    // Fetch data from the server
+}
+
+do {
+    try fetchData()
+
+    // Data fetched successfully
+} catch {
+    // Handle errors
+    print("An unexpected error occurred.")
+}
 ```
 
 **Not Recommended ❌**
 
 ```swift
+func fetchData() throws {
+    if !isConnectedToInternet {
+        throw NSError(domain: "my error domain", code: 35, userInfo: [:])
+    }
 
+    // Fetch data from the server
+}
+
+do { 
+    try fetchData()
+
+    // Data fetched successfully
+} catch {
+    // Handle errors
+    print("An unexpected error occurred.")
+}
 ```
+
+Start throw/try from new line for clarity, consistency, and better error isolation.
+
+**Recommended ✅**
+
+```swift
+func fetchData() throws {
+    if !isConnectedToInternet {
+        throw NetworkError.noInternet
+    }
+
+    // Fetch data from the server
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+func fetchData() throws {
+    if !isConnectedToInternet { throw NetworkError.noInternet }
+
+    // Fetch data from the server
+}
+```
+
+**Recommended ✅**
+
+```swift
+do {
+    try fetchData()
+
+    // Data fetched successfully
+} catch {
+    // Handle errors
+    print("An unexpected error occurred.")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+do { try fetchData() }
+catch {
+    // Handle errors
+    print("An unexpected error occurred.")
+}
+```
+
+
 ## Import Statements
 
 Import only the modules a source file requires. For example, don't import UIKit when importing Foundation will suffice. Likewise, don't import Foundation if you must import UIKit.
