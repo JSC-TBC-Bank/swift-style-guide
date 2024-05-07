@@ -239,6 +239,39 @@ catch {
 }
 ```
 
+**Handling specific errors**
+
+It's preferable to handle distinct errors separately rather than within a general catch block.
+
+**Recommended ✅**
+
+```swift
+do {
+    try fetchData()
+    // Data fetched successfully
+} catch NetworkError.noInternet {
+    // Handle the no internet error
+    print("No internet connection.")
+} catch NetworkError.serverError {
+    // Handle the server error
+    print("Server error occurred.")
+} catch {
+    // Handle other errors
+    print("An unexpected error occurred.")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+do {
+    try fetchData()
+    // Data fetched successfully
+} catch {
+    // Handle other errors
+    print("An unexpected error occurred.")
+}
+```
 
 ## Import Statements
 
