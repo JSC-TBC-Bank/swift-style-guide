@@ -68,3 +68,5 @@ func calculatePerimeterOfRectangle(first: Int, second: Int, third: Int, forth: I
   // calculate code goes here
 }
 ```
+
+## Optionals
