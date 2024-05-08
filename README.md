@@ -242,26 +242,6 @@ default:
 
 # Loops
 
-Prefer using `for-in` loops instead of `while` loops with condition checking and incrementation.
-
-**Recommended ✅**
-
-```swift
-for number in 0..<5 {
-    print(number)
-}
-```
-
-**Not Recommended ❌**
-
-```swift
-var number = 0
-while number < 5 {
-    print(number)
-    number += 1
-}
-```
-
 When the entire body of a for loop consists solely of an if block testing a condition of the element, place the testing condition within the where clause of the for statement instead.
 
 **Recommended ✅**
