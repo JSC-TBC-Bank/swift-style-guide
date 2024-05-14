@@ -112,3 +112,25 @@ class SomeViewController: UIViewController {
 }
 ```
 
+
+#### 2. Checking for `nil`
+
+When there's a need to verify the presence of a value in an optional without using it, preferring direct checking against nil over optional binding is clearer and more explicit.
+
+
+**Recommended ✅**
+
+```swift
+if userId != nil {
+  // ... do something 
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+if let _ = userId {
+  // ... do something 
+}
+```
+
