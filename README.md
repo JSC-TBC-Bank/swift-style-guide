@@ -73,6 +73,21 @@ func calculatePerimeterOfRectangle(first: Int, second: Int, third: Int, forth: I
 
 ### Declaring Optionals
 
-* Declare Declare optional constants/variables and function return types as optional to convey a non-error result that is either a value or the absence of a value (`nil`).
+Declare optional constants/variables and function return types as optional to convey a non-error result that is either a value or the absence of a value (`nil`).
 
-* When creating Models of API responses (JSON data), always declare properties as optionals to ensure handling situations where certain properties may not have a value in the received data. 
+When creating Models of API responses (JSON data), always declare properties as optionals to ensure handling situations where certain properties may not have a value in the received data. 
+
+Define an optional variable that does not have a default value without explicitly assigning it to `nil`.
+
+
+**Recommended ✅**
+
+```swift
+private var currency: String?
+```
+
+**Not Recommended ❌**
+
+```swift
+private var currency: String? = nil
+```
