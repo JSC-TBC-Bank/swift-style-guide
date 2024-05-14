@@ -135,6 +135,140 @@ if let _ = userId {
 ```
 
 
+#### 3. Optional Binding
+
+Use conditional unwrap with optional binding to access the optional’s value if it does exist and to make that value available as a temporary constant or variable. 
+
+If there's no need to reference the original optional constant or variable after accessing the value it contains, the existing name can be shadowed using the shorthand syntax.
+
+
+**Recommended ✅**
+
+```swift
+private var greetingName: String? = "Stranger"
+
+if let greetingName {
+    print("Hello, \(greetingName)!")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+private var greetingName: String? = "Stranger"
+
+if let greetingName = greetingName {
+    print("Hello, \(greetingName)!")
+}
+```
+
+
+Otherwise, it's advisable to introduce new names, but avoid using names like `unwrappedView` or `actualLabel` and so on.
+
+
+**Recommended ✅**
+
+```swift
+private var greetingName: String?
+private var greetingText: String?
+
+if let userGreetingName = greetingName, let inputGreetingText = greetingText {
+     // ... do something with unwrapped values
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+private var greetingName: String?
+private var greetingText: String?
+
+if let actualGreetingName = greetingName, let unwrappedGreetingText = greetingText {
+   // ... do something with unwrapped values
+}
+```
+
+
+When unwrapping optionals, prefer `guard` statements as opposed to `if` statements to decrease the amount of nested indentation in the code.
+
+
+**Recommended ✅**
+
+```swift
+guard let creditSale else { return }
+requestCredit(using: creditSale)
+enjoyShopping()
+```
+
+**Not Recommended ❌**
+
+```swift
+if let creditSale {
+    requestCredit(using: creditSale)
+    enjoyShopping()
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+if creditSale == nil { return }
+requestCredit(using: creditSale)
+enjoyShopping()
+```
+
+
+When multiple optionals are unwrapped either with `guard` or `if let`, minimize nesting by using the compound version when possible.
+
+
+**Recommended ✅**
+
+```swift
+if let username, let password, let passcode {
+    // ... do something with unwrapped values
+} else {
+    fatalError("Authentication Failed")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+if let username {
+    if let password {
+        if let passcode {
+            // ... do something with unwrapped values
+        } else {
+            fatalError("Authentication Failed")
+        }
+    } else {
+        fatalError("Authentication Failed")
+    }
+} else {
+    fatalError("Authentication Failed")
+}
+```
+
+
+In the compound version, which can't be fit on one line, place the `guard` / `if` on its own line, then indent each condition on a separate line.
+
+
+**Recommended ✅**
+
+```swift
+guard 
+  let username,
+  let email,
+  let password,
+  let passcode,
+  let securityAnswer
+else {
+  fatalError("Authentication Failed")
+}
+// ... do something with values
+```
+
+
 ### Providing Fallback Value
 
 Use the nil-coalescing operator as a shorthand method to provide a fallback value when unwrapping an optional, instead of using the ternary conditional operator and forced unwrapping.
