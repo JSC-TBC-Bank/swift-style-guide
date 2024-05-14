@@ -134,3 +134,25 @@ if let _ = userId {
 }
 ```
 
+
+### Providing Fallback Value
+
+Use the nil-coalescing operator as a shorthand method to provide a fallback value when unwrapping an optional, instead of using the ternary conditional operator and forced unwrapping.
+
+**Recommended ✅**
+
+```swift
+private let depositDefaultName = "My Piggy"
+private var userDefinedDepositName: String?
+
+private var depositNameToDisplay = userDefinedDepositName ?? depositDefaultName
+```
+
+**Not Recommended ❌**
+
+```swift
+private let depositDefaultName = "My Piggy"
+private var userDefinedDepositName: String?
+
+private var depositNameToDisplay = userDefinedDepositName != nil ? userDefinedDepositName! : depositDefaultName
+```
