@@ -115,7 +115,7 @@ class SomeViewController: UIViewController {
 
 **`weak` VS `unowned`**
 
-Always prefer using `weak` over `unowned` since we don't ever want to have implicit unwraps because it is an equivalent of a weak property that is implicitly unwrapped. 
+It’s advisable to prefer the use of `weak` over `unowned`. Implicit unwrapping should be avoided whenever possible, as `unowned` is essentially a `weak` property that is implicitly unwrapped.
 
 **Recommended ✅**
 
@@ -284,7 +284,7 @@ guard
 else {
   fatalError("Authentication Failed")
 }
-// ... do something with values
+// ... do something with unwrapped values
 ```
 
 
