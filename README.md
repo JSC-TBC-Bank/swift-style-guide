@@ -113,6 +113,25 @@ class SomeViewController: UIViewController {
 ```
 
 
+**`weak` VS `unowned`**
+
+Always prefer using `weak` over `unowned` since we don't ever want to have implicit unwraps because it is an equivalent of a weak property that is implicitly unwrapped. 
+
+**Recommended ✅**
+
+```swift
+private weak var parentViewController: UIViewController?
+```
+
+**Not Recommended ❌**
+
+```swift
+private weak var parentViewController: UIViewController!
+
+private unowned var parentViewController: UIViewController
+```
+
+
 #### 2. Checking for `nil`
 
 When there's a need to verify the presence of a value in an optional without using it, preferring direct checking against nil over optional binding is clearer and more explicit.
