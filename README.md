@@ -201,7 +201,7 @@ let data: [String: Any] = getDataFromServer()
 
 ### Constructable Initialization
 
-When initializing a constructable (struct or class), always use an explicitly typed declaration. This is especially important when there's no clear type on the left-hand side.
+When initializing a constructable (struct or class), always use an explicitly typed declaration.
 
 **Recommended ✅**
 
@@ -218,32 +218,6 @@ let value = MyConstructible()
 ```
 
 This can lead to ambiguity and potential performance issues.
-
-### Function Return Types
-
-Swift can infer the return type of a function, which can reduce redundancy. However, in complex functions, it's better to specify the return type explicitly.
-
-**Recommended ✅**
-
-```swift
-func square(of number: Int) -> Int {
-    number * number
-}
-```
-
-Here, the return type `Int` is clear from the function's context and the provided return type annotation.
-
-**Not Recommended ❌**
-
-```swift
-func process(input: String) -> [String: Any] {
-    // Complex processing logic
-    ...
-    return result
-}
-```
-
-Always specify the return type in complex functions to improve readability.
 
 ### Type Aliases
 
