@@ -209,45 +209,23 @@ When initializing a constructable (struct or class), always use an explicitly ty
 let value: MyConstructible = MyConstructible()
 ```
 
-This ensures the compiler clearly understands the type, improving both performance and readability.
+This approach removes ambiguity and potential performance issues associated with type inference during initialization.
 
-**Not Recommended ❌**
+**Neutral ⚪**
 
 ```swift
 let value = MyConstructible()
 ```
 
-This can lead to ambiguity and potential performance issues.
-
-### Type Aliases
-
-Use type aliases with type inference to simplify code, but ensure they are clear and not overly complex.
-
-**Recommended ✅**
-
-```swift
-typealias CompletionHandler = (Bool) -> Void
-
-func fetchData(completion: CompletionHandler) {
-    // Fetch data logic
-    completion(true)
-}
-```
-
-Here, `CompletionHandler` is clear and concise.
+Using type inference here is generally acceptable, but it may not always be optimal for performance.
 
 **Not Recommended ❌**
 
 ```swift
-typealias DataHandler = ([String: Any], Error?) -> Void
-
-func getData(handler: DataHandler) {
-    // Fetch data logic
-    handler(["key": "value"], nil)
-}
+let value: MyConstructible = .init()
 ```
 
-In this case, breaking down the type alias into more descriptive components can improve readability.
+Using `.init()` with an explicitly typed declaration can lead to potential performance issues, as it requires the compiler to resolve the type twice.
 
 ### Dictionary and Array Initialization
 
