@@ -97,7 +97,7 @@ private var currency: String? = nil
 
 #### 1. Force Unwrapping
 
-Implicitly unwrapped optionals are inherently unsafe and should be avoided whenever possible. Instead, use non-optional values or normal optionals. It’s safer and more reliable, even if you think a value will never be `nil`. Even in situations where you feel confident that a property will never be `nil`, it's better to prioritize safety and consistency.
+Implicitly unwrapped optionals are inherently unsafe and should be avoided whenever possible. Instead, use non-optional values or normal optionals. Even in situations where you feel confident that a property will never be `nil`, it's better to prioritize safety and consistency.
 
 ❗️The only time implicitly unwrapped optionals are used is with `@IBOutlets`, where their lifetimes are tied to the UI lifecycle rather than strictly to the owning object.
 
