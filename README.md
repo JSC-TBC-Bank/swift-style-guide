@@ -20,6 +20,7 @@ TBC Swift Style Guide is your go-to resource for mastering Swift syntax conventi
   - [Syntactic Sugar](#syntactic-sugar)
 - [Control Flow](#control-flow)
   - [If Statements](#if-statements)
+  - [Guard Statements](#guard-statements)
   - [Switch Statements](#switch-statements)
   - [Loops](#loops)
   - [Ternary Operator](#ternary-operator)
@@ -151,6 +152,66 @@ if firstBooleanValue {
 }
 ```
 
+# Guard Statements
+
+When using control flow statement `guard`, the first continuation line should be after the control flow keyword. If have more than one continuation line, write them on a new line. The open brace `{` should be next to the last  continuation line.
+
+**Recommended ✅**
+
+```swift
+guard let firstValue = firstOptionalValue(),
+      let secondValue = secondOptionalValue() else { return }
+```
+
+**Not Recommended ❌**
+
+```swift
+guard
+    let firstValue = firstOptionalValue(),
+    let secondValue = secondOptionalValue()
+else {
+    return
+}
+```
+
+In else block, if have only ony keyword, write it on the same line, next to the last continuation line, if have more than one, write them on a new line.
+
+**Recommended ✅**
+
+```swift
+guard let firstValue = firstOptionalValue(),
+      let secondValue = secondOptionalValue() else { return }
+```
+
+```swift
+guard let firstValue = firstOptionalValue(),
+      let secondValue = secondOptionalValue() else {
+    doSomething()
+    return
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+guard let firstValue = firstOptionalValue(),
+      let secondValue = secondOptionalValue() else {
+    return
+}
+```
+
+```swift
+guard let firstValue = firstOptionalValue(),
+      let secondValue = secondOptionalValue() else { doSomething()
+    return
+}
+```
+
+```swift
+guard let firstValue = firstOptionalValue(),
+      let secondValue = secondOptionalValue() else { doSomething(); return }
+```
+      
 # Switch Statements
 
 When use switch with `enums ` with associated values, write let before case.
@@ -202,9 +263,22 @@ case .applePay:
 }
 ```
 
-When using switch to set the value of a variable. 
+
+If the statements are short, you can place them on a single line for each case. 
 
 **Recommended ✅**
+
+```swift
+let spelledOut = switch Int.random(in: 0...3) {
+case 0: "Zero"
+case 1: "One"
+case 2: "Two"
+case 3: "Three"
+default: "Out of range"
+}
+```
+
+**Not Recommended ❌**
 
 ```swift
 let spelledOut = switch Int.random(in: 0...3) {
@@ -218,6 +292,20 @@ case 3:
     "Three"
 default:
     "Out of range"
+}
+```
+
+When using switch to set the value of a variable. 
+
+**Recommended ✅**
+
+```swift
+let spelledOut = switch Int.random(in: 0...3) {
+case 0: "Zero"
+case 1: "One"
+case 2: "Two"
+case 3: "Three"
+default: "Out of range"
 }
 ```
 
@@ -297,4 +385,22 @@ let twenty = 20
 let text = operation == "add" ?
 "The sum of \(fifty) and \(twenty) is \(fifty + twenty)." :
 "The difference between \(fifty) and \(twenty) is \(fifty - twenty)."
+```
+
+If needed, using ternary operator with void functions is allowed.
+
+**Recommended ✅**
+
+```swift
+func logInfo() {
+    print("This is an informational message.")
+}
+
+func logError() {
+    print("This is an error message.")
+}
+
+let isError = true
+
+isError ? logError() : logInfo()
 ```
