@@ -281,6 +281,4 @@ let complexArray = [
     [1, nil, 1.0, Decimal(1)],
     ["a", "b", "c"]
 ]
-
-var ambiguousNumbers = []
 ```
