@@ -164,11 +164,11 @@ var baseURLs: [URL]
 
 ## Type Inference
 
-Swift's type inference allows the compiler to deduce the type of a variable or expression automatically, making code more concise and readable. However, over-reliance on type inference can lead to ambiguous code, reducing readability and maintainability. Additionally, certain practices can affect compiler performance. The following guidelines illustrate best practices and common pitfalls with examples.
+Swift's type inference lets the compiler automatically determine the type of a variable or expression, which helps make the code more concise and easier to read. However, relying too much on type inference can cause code to become unclear and harder to maintain. It can also greatly affect the compiler's performance.
 
 ### Variable Declaration
 
-Using type inference can make variable declarations more concise, but it's important to ensure the type remains clear and to consider compiler performance.
+Use type inference for concise variable declarations, but ensure the type remains clear and consider compiler performance.
 
 **Recommended ✅**
 
@@ -221,7 +221,7 @@ This can lead to ambiguity and potential performance issues.
 
 ### Type Aliases
 
-Using type aliases with type inference can simplify code, but they should be clear and not overly complex.
+Use type aliases with type inference to simplify code, but ensure they are clear and not overly complex.
 
 **Recommended ✅**
 
@@ -251,7 +251,7 @@ In this case, breaking down the type alias into more descriptive components can 
 
 ### Dictionary and Array Initialization
 
-When initializing collections, type inference can be useful, but it's important to ensure clarity and consider compiler performance. Use untyped literals for simple collections and be explicit with empty and nested collections.
+When initializing collections, leverage type inference for simple cases but specify types for empty and nested collections to enhance clarity and compiler performance.
 
 **Recommended ✅**
 
