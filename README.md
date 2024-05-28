@@ -400,6 +400,245 @@ Timer.scheduledTimer(timeInterval: 30, repeats: false, block: { timer in
 
 let squares = [1, 2, 3].map({ $0 * $0 })
 ```
+Functions should not be overloaded such that two overloads differ only by the name of their trailing closure argument. Doing so prevents using trailing closure syntax—when the label is not present, a call to the function with a trailing closure is ambiguous
+
+**Not Recommended ❌**
+
+```swift
+func greet(enthusiastically nameProvider: () -> String) {
+  print("Hello, \(nameProvider())! It's a pleasure to see you!")
+}
+
+func greet(apathetically nameProvider: () -> String) {
+  print("Oh, look. It's \(nameProvider()).")
+}
+
+greet { "John" }  // error: ambiguous use of 'greet'
+```
+
+This example is fixed by differentiating some part of the function name other than the closure argument—in this case, the base name
+
+**Recommended ✅**
+
+```swift
+func greetEnthusiastically(_ nameProvider: () -> String) {
+  print("Hello, \(nameProvider())! It's a pleasure to see you!")
+}
+
+func greetApathetically(_ nameProvider: () -> String) {
+  print("Oh, look. It's \(nameProvider()).")
+}
+
+greetEnthusiastically { "John" }
+greetApathetically { "not John" }
+```
+
+For single-expression closures where the context is clear, use implicit returns:
+
+**Recommended ✅**
+
+```swift
+attendeeList.sort { a, b in
+  a > b
+}
+```
+
+Chained methods using trailing closures should be clear and easy to read in context. Decisions on spacing, line breaks, and when to use named versus anonymous arguments is left to the discretion of the author. Examples:
+
+**Recommended ✅**
+
+```swift
+let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
+
+let value = numbers
+  .map {$0 * 2}
+  .filter {$0 > 50}
+  .map {$0 + 10}
+```
+
+Favor Void return types over () in closure declarations. If you must specify a Void return type in a function declaration, use Void rather than () to improve readability.
+
+**Recommended ✅**
+
+```swift
+func method(completion: () -> Void) {
+  ...
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+func method(completion: () -> ()) {
+  ...
+}
+```
+
+Name unused closure parameters as underscores. Makes it obvious which parameters are used and which are unused.
+
+**Recommended ✅**
+
+```swift
+someAsyncThing() { _, _, argument3 in
+  print(argument3)
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+someAsyncThing() { argument1, argument2, argument3 in
+  print(argument3)
+}
+```
+
+Closures should have a single space or newline inside each brace. Trailing closures should additionally have a single space or newline outside each brace.
+
+**Recommended ✅**
+
+```swift
+let evenSquares = numbers.filter { $0.isMultiple(of: 2) }.map { $0 * $0 }
+
+let evenSquares = numbers.filter({ $0.isMultiple(of: 2) }).map({ $0 * $0 })
+
+let evenSquares = numbers
+  .filter {
+    $0.isMultiple(of: 2)
+  }
+  .map {
+    $0 * $0
+  }
+```
+
+**Not Recommended ❌**
+
+```swift
+let evenSquares = numbers.filter{$0.isMultiple(of: 2)}.map{  $0 * $0  }
+
+let evenSquares = numbers.filter( { $0.isMultiple(of: 2) } ).map( { $0 * $0 } )
+
+let evenSquares = numbers
+  .filter{
+    $0.isMultiple(of: 2)
+  }
+  .map{
+    $0 * $0
+  }
+```
+
+Omit Void return types from closure expressions
+
+**Recommended ✅**
+
+```swift
+someAsyncThing() { argument in
+  ...
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+someAsyncThing() { argument -> Void in
+  ...
+}
+```
+
+Prefer trailing closure syntax for closure arguments with no parameter name.
+
+**Recommended ✅**
+
+```swift
+planets.map { $0.name }
+
+// since this closure has a parameter name
+planets.first(where: { $0.isGasGiant })
+
+// ALSO FINE. Trailing closure syntax is still permitted for closures
+// with parameter names. However, consider using non-trailing syntax
+// in cases where the parameter name is semantically meaningful.
+planets.first { $0.isGasGiant }
+```
+
+**Not Recommended ❌**
+
+```swift
+planets.map({ $0.name })
+```
+
+**Captures**
+
+Avoid using unowned captures. Instead prefer safer alternatives like weak captures, or capturing variables directly.
+
+**Not Recommended ❌**
+
+```swift
+// WRONG: Crashes if `self` has been deallocated when closures are called.
+final class SpaceshipNavigationService {
+  let spaceship: Spaceship
+  let planet: Planet
+  
+  func colonizePlanet() {
+    spaceship.travel(to: planet, onArrival: { [unowned self] in
+      planet.colonize()
+    })
+  }
+  
+  func exploreSystem() {
+    spaceship.travel(to: planet, nextDestination: { [unowned self] in
+      planet.moons?.first
+    })
+  }
+}
+```
+weak captures are safer because they require the author to explicitly handle the case where the referenced object no longer exists.
+
+**Recommended ✅**
+
+```swift
+final class SpaceshipNavigationService {
+  let spaceship: Spaceship
+  let planet: Planet
+  
+  func colonizePlanet() {
+    spaceship.travel(to: planet, onArrival: { [weak self] in
+      guard let self else { return }
+      planet.colonize()
+    })
+  }
+  
+  func exploreSystem() {
+    spaceship.travel(to: planet, nextDestination: { [weak self] in
+      guard let self else { return nil }
+      return planet.moons?.first
+    })
+  }
+}
+```
+
+Alternatively, consider directly capturing the variables that are used in the closure. This lets you avoid having to handle the case where self is nil, since you don't even need to reference self:
+
+**Recommended ✅**
+
+```swift
+final class SpaceshipNavigationService {
+  let spaceship: Spaceship
+  let planet: Planet
+  
+  func colonizePlanet() {
+    spaceship.travel(to: planet, onArrival: { [planet] in
+      planet.colonize()
+    })
+  }
+  
+  func exploreSystem() {
+    spaceship.travel(to: planet, nextDestination: { [planet] in
+      planet.moons?.first
+    })
+  }
+}
+```
+
 ## Import Statements
 
 Import only the modules a source file requires. For example, don't import UIKit when importing Foundation will suffice. Likewise, don't import Foundation if you must import UIKit.
