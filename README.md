@@ -655,3 +655,4 @@ private var userDefinedDepositName: String?
 
 private var depositNameToDisplay = userDefinedDepositName != nil ? userDefinedDepositName! : depositDefaultName
 ```
+
