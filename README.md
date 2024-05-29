@@ -241,7 +241,7 @@ enjoyShopping()
 ```
 
 
-When multiple optionals are unwrapped either with `guard` or `if let`, minimize nesting by using the compound version when possible.
+When multiple optionals are unwrapped either with `guard` or `if` statement, minimize nesting by using the compound version when possible.
 
 Additionally, for better readability and debugging, place the `guard` / `if` on its own line, and then indent each condition on a separate line.
 
