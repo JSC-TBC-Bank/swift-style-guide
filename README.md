@@ -448,12 +448,13 @@ Chained methods using trailing closures should be clear and easy to read in cont
 **Recommended ✅**
 
 ```swift
+// Prefer this approach in if or guard checks 
 let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
 
 let value = numbers
-  .map {$0 * 2}
-  .filter {$0 > 50}
-  .map {$0 + 10}
+  .map { $0 * 2 }
+  .filter { $0 > 50 }
+  .map { $0 + 10 }
 ```
 
 Favor Void return types over () in closure declarations. If you must specify a Void return type in a function declaration, use Void rather than () to improve readability.
@@ -616,9 +617,9 @@ final class SpaceshipNavigationService {
 }
 ```
 
-Alternatively, consider directly capturing the variables that are used in the closure. This lets you avoid having to handle the case where self is nil, since you don't even need to reference self:
+Alternatively, consider directly capturing the variables that are used in the closure. This lets you avoid having to handle the case where self is nil, since you don't even need to reference self: But bare in mind that using this approach might cause memory leaks in some cases so use it wisely.
 
-**Recommended ✅**
+**MIGHT BE USEFUL IN SOME CASES**
 
 ```swift
 final class SpaceshipNavigationService {
