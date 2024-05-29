@@ -191,7 +191,9 @@ Otherwise, it's advisable to introduce new names, but avoid using names like `un
 private var greetingName: String?
 private var greetingText: String?
 
-if let userGreetingName = greetingName, let inputGreetingText = greetingText {
+if 
+let userGreetingName = greetingName, 
+let inputGreetingText = greetingText {
      // ... do something with unwrapped values
 }
 ```
@@ -202,7 +204,9 @@ if let userGreetingName = greetingName, let inputGreetingText = greetingText {
 private var greetingName: String?
 private var greetingText: String?
 
-if let actualGreetingName = greetingName, let unwrappedGreetingText = greetingText {
+if 
+let actualGreetingName = greetingName, 
+let unwrappedGreetingText = greetingText {
    // ... do something with unwrapped values
 }
 ```
@@ -239,15 +243,22 @@ enjoyShopping()
 
 When multiple optionals are unwrapped either with `guard` or `if let`, minimize nesting by using the compound version when possible.
 
+Additionally, for better readability and debugging, place the `guard` / `if` on its own line, and then indent each condition on a separate line.
+
 
 **Recommended ✅**
 
 ```swift
-if let username, let password, let passcode {
-    // ... do something with unwrapped values
-} else {
-    fatalError("Authentication Failed")
+guard 
+  let username,
+  let email,
+  let password,
+  let passcode,
+  let securityAnswer
+else {
+  fatalError("Authentication Failed")
 }
+// ... do something with unwrapped values
 ```
 
 **Not Recommended ❌**
@@ -266,25 +277,6 @@ if let username {
 } else {
     fatalError("Authentication Failed")
 }
-```
-
-
-In the compound version, which can't be fit on one line, place the `guard` / `if` on its own line, then indent each condition on a separate line.
-
-
-**Recommended ✅**
-
-```swift
-guard 
-  let username,
-  let email,
-  let password,
-  let passcode,
-  let securityAnswer
-else {
-  fatalError("Authentication Failed")
-}
-// ... do something with unwrapped values
 ```
 
 
