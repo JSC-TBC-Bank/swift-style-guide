@@ -591,23 +591,6 @@ enjoyShopping()
 
 When multiple optionals are unwrapped either with `guard` or `if` statement, minimize nesting by using the compound version when possible.
 
-Additionally, for better readability and debugging, place the `guard` / `if` on its own line, and then indent each condition on a separate line.
-
-
-**Recommended ✅**
-
-```swift
-guard 
-  let username,
-  let email,
-  let password,
-  let passcode,
-  let securityAnswer
-else {
-  fatalError("Authentication Failed")
-}
-// ... do something with unwrapped values
-```
 
 **Not Recommended ❌**
 
@@ -632,6 +615,7 @@ if let username {
 
 Use the nil-coalescing operator as a shorthand method to provide a fallback value when unwrapping an optional, instead of using the ternary conditional operator and forced unwrapping.
 
+
 **Recommended ✅**
 
 ```swift
@@ -649,4 +633,3 @@ private var userDefinedDepositName: String?
 
 private var depositNameToDisplay = userDefinedDepositName != nil ? userDefinedDepositName! : depositDefaultName
 ```
-
