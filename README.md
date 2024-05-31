@@ -542,12 +542,9 @@ Otherwise, it's advisable to introduce new names, but avoid using names like `un
 **Recommended ✅**
 
 ```swift
-private var greetingName: String?
 private var greetingText: String?
 
-if 
-let userGreetingName = greetingName, 
-let inputGreetingText = greetingText {
+if let inputGreetingText = greetingText {
      // ... do something with unwrapped values
 }
 ```
@@ -555,12 +552,9 @@ let inputGreetingText = greetingText {
 **Not Recommended ❌**
 
 ```swift
-private var greetingName: String?
 private var greetingText: String?
 
-if 
-let actualGreetingName = greetingName, 
-let unwrappedGreetingText = greetingText {
+if let unwrappedGreetingText = greetingText {
    // ... do something with unwrapped values
 }
 ```
