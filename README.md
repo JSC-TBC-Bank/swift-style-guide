@@ -422,3 +422,214 @@ import Foundation
 var view: UIView
 var baseURLs: [URL]
 ```
+
+## Optionals
+
+### Declaring Optionals
+
+Declare optional constants/variables and function return types as optional to convey a non-error result that is either a value or the absence of a value (`nil`).
+
+When creating Models of API responses (JSON data), always declare properties as optionals to ensure handling situations where certain properties may not have a value in the received data. 
+
+Define an optional variable that does not have a default value without explicitly assigning it to `nil`.
+
+
+**Recommended ✅**
+
+```swift
+private var currency: String?
+```
+
+**Not Recommended ❌**
+
+```swift
+private var currency: String? = nil
+```
+
+
+### Unwrapping Optionals
+
+#### 1. Force Unwrapping
+
+Implicitly unwrapped optionals are inherently unsafe and should be avoided whenever possible. Instead, use non-optional values or normal optionals. Even in situations where you feel confident that a property will never be `nil`, it's better to prioritize safety and consistency.
+
+❗️The only time implicitly unwrapped optionals are used is with `@IBOutlets`, where their lifetimes are tied to the UI lifecycle rather than strictly to the owning object.
+
+
+**Recommended ✅**
+
+```swift
+class SomeViewController: UIViewController {
+
+  @IBOutlet private weak var saveButton: UIButton!
+  
+}
+```
+
+
+**`weak` VS `unowned`**
+
+It’s advisable to prefer the use of `weak` over `unowned`. Implicit unwrapping should be avoided whenever possible, as `unowned` is essentially a `weak` property that is implicitly unwrapped.
+
+**Recommended ✅**
+
+```swift
+private weak var parentViewController: UIViewController?
+```
+
+**Not Recommended ❌**
+
+```swift
+private weak var parentViewController: UIViewController!
+
+private unowned var parentViewController: UIViewController
+```
+
+
+#### 2. Checking for `nil`
+
+When there's a need to verify the presence of a value in an optional without using it, preferring direct checking against nil over optional binding is clearer and more explicit.
+
+
+**Recommended ✅**
+
+```swift
+if userId != nil {
+  // ... do something 
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+if let _ = userId {
+  // ... do something 
+}
+```
+
+
+#### 3. Optional Binding
+
+Use conditional unwrap with optional binding to access the optional’s value if it does exist and to make that value available as a temporary constant or variable. 
+
+If there's no need to reference the original optional constant or variable after accessing the value it contains, the existing name can be shadowed using the shorthand syntax.
+
+
+**Recommended ✅**
+
+```swift
+private var greetingName: String? = "Stranger"
+
+if let greetingName {
+    print("Hello, \(greetingName)!")
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+private var greetingName: String? = "Stranger"
+
+if let greetingName = greetingName {
+    print("Hello, \(greetingName)!")
+}
+```
+
+
+Otherwise, it's advisable to introduce new names, but avoid using names like `unwrappedView` or `actualLabel` and so on.
+
+
+**Recommended ✅**
+
+```swift
+private var greetingText: String?
+
+if let inputGreetingText = greetingText {
+     // ... do something with unwrapped values
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+private var greetingText: String?
+
+if let unwrappedGreetingText = greetingText {
+   // ... do something with unwrapped values
+}
+```
+
+
+When unwrapping optionals, prefer `guard` statements as opposed to `if` statements to decrease the amount of nested indentation in the code.
+
+
+**Recommended ✅**
+
+```swift
+guard let creditSale else { return }
+requestCredit(using: creditSale)
+enjoyShopping()
+```
+
+**Not Recommended ❌**
+
+```swift
+if let creditSale {
+    requestCredit(using: creditSale)
+    enjoyShopping()
+}
+```
+
+**Not Recommended ❌**
+
+```swift
+if creditSale == nil { return }
+requestCredit(using: creditSale)
+enjoyShopping()
+```
+
+
+When multiple optionals are unwrapped either with `guard` or `if` statement, minimize nesting by using the compound version when possible.
+
+
+**Not Recommended ❌**
+
+```swift
+if let username {
+    if let password {
+        if let passcode {
+            // ... do something with unwrapped values
+        } else {
+            fatalError("Authentication Failed")
+        }
+    } else {
+        fatalError("Authentication Failed")
+    }
+} else {
+    fatalError("Authentication Failed")
+}
+```
+
+
+### Providing Fallback Value
+
+Use the nil-coalescing operator as a shorthand method to provide a fallback value when unwrapping an optional, instead of using the ternary conditional operator and forced unwrapping.
+
+
+**Recommended ✅**
+
+```swift
+private let depositDefaultName = "My Piggy"
+private var userDefinedDepositName: String?
+
+private var depositNameToDisplay = userDefinedDepositName ?? depositDefaultName
+```
+
+**Not Recommended ❌**
+
+```swift
+private let depositDefaultName = "My Piggy"
+private var userDefinedDepositName: String?
+
+private var depositNameToDisplay = userDefinedDepositName != nil ? userDefinedDepositName! : depositDefaultName
+```
