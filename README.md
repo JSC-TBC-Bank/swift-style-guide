@@ -633,3 +633,125 @@ private var userDefinedDepositName: String?
 
 private var depositNameToDisplay = userDefinedDepositName != nil ? userDefinedDepositName! : depositDefaultName
 ```
+
+
+## Type Inference
+
+Swift's type inference lets the compiler automatically determine the type of a variable or expression, which helps make the code more concise and easier to read. However, relying too much on type inference can cause code to become unclear and harder to maintain. It can also greatly affect the compiler's performance.
+
+### Variable Declaration
+
+Use type inference for concise variable declarations, but ensure the type remains clear and consider compiler performance.
+
+**Recommended ✅**
+
+For initializing numbers or strings, use untyped literals when possible.
+
+```swift
+let message = "Hello, world"
+let count = 42
+```
+
+If the type doesn't match the default type, specify the type explicitly.
+
+```swift
+let value: Decimal = 12.25
+```
+
+**Not Recommended ❌**
+
+Avoid using type inference when the type is not clear from the context.
+
+```swift
+let data = getDataFromServer()
+```
+
+In this case, explicitly specifying the type improves clarity.
+
+```swift
+let data: [String: Any] = getDataFromServer()
+```
+
+### Constructable Initialization
+
+When initializing a constructable (struct or class), it is generally acceptable to use type inference, but explicitly typing the declaration can help remove ambiguity and potential performance issues.
+
+**Recommended ✅**
+
+```swift
+let value = MyConstructible()
+```
+
+Using type inference here is generally acceptable and offers a balance between readability and performance.
+
+**Neutral ⚪**
+
+```swift
+let value: MyConstructible = MyConstructible()
+```
+
+This approach removes ambiguity and potential performance issues associated with type inference during initialization but may be less readable.
+
+**Not Recommended ❌**
+
+```swift
+let value: MyConstructible = .init()
+```
+
+Using `.init()` with an explicitly typed declaration can lead to potential performance issues, as it requires the compiler to resolve the type twice.
+
+### Dictionary and Array Initialization
+
+When initializing collections, leverage type inference for simple cases but specify types for empty and nested collections to enhance clarity and compiler performance.
+
+**Recommended ✅**
+
+For simple dictionaries and arrays, using untyped literals improves performance and readability.
+
+```swift
+let simpleDictionary = ["one": 1, "two": 2, "three": 3]
+let mixedArray = [1, nil, 1.0, Decimal(1)]
+```
+
+For empty collections, explicitly specify the type to avoid ambiguity.
+
+```swift
+var numbers: [Int] = []
+var strings: [String] = []
+```
+
+For nested collections, specify the type explicitly on the left-hand side to improve clarity and compiler performance.
+
+```swift
+let nestedDictionary: [String: [String: [String: Int]]] = [
+    "level1": [
+        "level2": [
+            "key": 1
+        ]
+    ]
+]
+
+let nestedArray: [[Any]] = [
+    [1, nil, 1.0, Decimal(1)],
+    ["a", "b", "c"]
+]
+```
+
+**Not Recommended ❌**
+
+Avoid using type inference for nested collections and empty collections, as it can lead to performance issues and reduced readability.
+
+```swift
+let complexDictionary = [
+    "level1": [
+        "level2": [
+            "key": 1
+        ]
+    ]
+]
+
+let complexArray = [
+    [1, nil, 1.0, Decimal(1)],
+    ["a", "b", "c"]
+]
+```
