@@ -201,23 +201,23 @@ let data: [String: Any] = getDataFromServer()
 
 ### Constructable Initialization
 
-When initializing a constructable (struct or class), always use an explicitly typed declaration.
+When initializing a constructable (struct or class), it is generally acceptable to use type inference, but explicitly typing the declaration can help remove ambiguity and potential performance issues.
 
 **Recommended ✅**
-
-```swift
-let value: MyConstructible = MyConstructible()
-```
-
-This approach removes ambiguity and potential performance issues associated with type inference during initialization.
-
-**Neutral ⚪**
 
 ```swift
 let value = MyConstructible()
 ```
 
-Using type inference here is generally acceptable, but it may not always be optimal for performance.
+Using type inference here is generally acceptable and offers a balance between readability and performance.
+
+**Neutral ⚪**
+
+```swift
+let value: MyConstructible = MyConstructible()
+```
+
+This approach removes ambiguity and potential performance issues associated with type inference during initialization but may be less readable.
 
 **Not Recommended ❌**
 
