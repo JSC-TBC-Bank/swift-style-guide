@@ -634,6 +634,7 @@ private var userDefinedDepositName: String?
 private var depositNameToDisplay = userDefinedDepositName != nil ? userDefinedDepositName! : depositDefaultName
 ```
 
+
 ## Type Inference
 
 Swift's type inference lets the compiler automatically determine the type of a variable or expression, which helps make the code more concise and easier to read. However, relying too much on type inference can cause code to become unclear and harder to maintain. It can also greatly affect the compiler's performance.
